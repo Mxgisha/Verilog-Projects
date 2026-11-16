@@ -1,0 +1,5 @@
+-> to compile the sim file and the verilog module
+verilator --cc --exe --build -j 0 -Wall {sim-file-name}.cpp {module-file-name}.v
+
+-> run the simulator
+./obj_dir/Vour

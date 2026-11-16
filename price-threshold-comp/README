@@ -1,0 +1,42 @@
+Pipelined Fixed-Point Price Comparator
+--------------------------------------
+
+A low-latency, 2-stage pipelined fixed-point price threshold comparator written in Verilog.
+Designed with high-frequency trading (HFT) principles in mind, this project demonstrates
+deterministic timing, clean signal registration, and zero floating-point overhead to maximize
+clock frequency.
+
+Project Structure & File Purposes
+---------------------------------
+
+price_comparator.v: The core hardware design. 
+Implements a 2-stage pipeline:
+ - Stage 1: Registers incoming 32-bit price and threshold streams to isolate routing skew.
+ - Stage 2: Performs a high-speed comparator check (price > threshold) and registers the final
+boolean trigger flag.
+
+tb_price_comparator.v: A self-checking testbench. Automatically drives test vectors, tracks 
+pipeline delay using a behavioral reference model, and logs real-time PASS/FAIL diagnostics 
+to the terminal.
+
+waveform.vcd: Generated value change dump file containing simulation timing data for visual
+inspection.
+
+Getting Started & Prerequisites
+------------------------------- 
+
+To run this project locally using open-source EDA
+tools, ensure you have Icarus Verilog (iverilog) and GTKWave installed on your Linux system.
+
+How to Run the Simulation
+-------------------------
+
+Compile the design and testbench together:
+- iverilog -o sim_run price_comparator.v tb_price_comparator.v
+
+Execute the simulation:
+- ./sim_run
+
+View the timing waveforms (Optional):
+- gtkwave waveform.vcd
+

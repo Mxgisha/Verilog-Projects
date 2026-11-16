@@ -1,0 +1,51 @@
+8-bit PWM Generator with Verilator
+==================================
+
+A lightweight hardware simulation project implementing an 8-bit Pulse-Width Modulation (PWM) counter in Verilog, driven by a C++ testbench using Verilator.
+
+Project Structure
+=================
+
+pwm.v — The Verilog hardware module (8-bit free-running counter + comparator).
+sim_main.cpp — The C++ testbench that drives the clock, updates the duty cycle, and records waveforms.
+Makefile — Optional automation for building and running the simulation.
+
+Prerequisites
+=============
+
+Ensure you have the following installed on your system (Arch Linux / Omarchy):
+verilator
+make
+A C++ compiler (g++ or clang++)
+
+gtkwave (optional, for viewing waveforms)
+
+-----Quick Start-----
+
+1. Manual Compilation & Execution
+=================================
+
+Run the following Verilator command to parse the Verilog code, generate the C++ harness, compile it, and build the executable:
+verilator --cc --exe --build -j 0 -Wall sim_main.cpp pwm.v
+
+
+2. Run the Simulation
+====================
+
+Execute the compiled binary inside the build folder:
+./obj_dir/Vpwm
+This will run the simulation for a set number of clock cycles, dynamically adjust the duty cycle, and output a waveform.vcd file.
+
+3. View Waveforms
+=================
+
+You can inspect the generated VCD trace using GTKWave:
+gtkwave waveform.vcd
+
+
+How It Works
+============
+
+Hardware (pwm.v): Increments an 8-bit register on every positive clock edge. Outputs a high signal (pwm_out) whenever the counter value is less than the duty threshold.
+
+Software (sim_main.cpp): Toggles the clock signal in a loop, steps the Verilator evaluation context, modifies the duty input halfway through to show dynamic control, and dumps state changes into a VCD trace stream.
